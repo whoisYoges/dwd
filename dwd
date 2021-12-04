@@ -1,0 +1,20 @@
+#!/bin/bash
+
+walldir="$HOME/Pictures/Wallpapers/"
+maxpage=5
+query=$(echo -e | dmenu -p "Search Category: " -i)  
+sortoptions="date_added\nrelevance\nrandom\nviews\nfavorites\ntoplist"
+sorting=$(echo -e $sortoptions | dmenu -p "Sort Order: " -i)
+
+query="$(sed 's/#//g' <<<$query)"
+query="$(sed 's/ /+/g' <<<$query)" 
+echo $query
+
+for i in $(seq 1 5);
+do
+  curl -s https://wallhaven.cc/api/v1/search\?atleast\=1920x1080\&sorting\=$sorting\&q\=$query\&page\=$i > tmp.txt
+  page=$(cat tmp.txt | jq '.' | grep -Eoh "https:\/\/w\.wallhaven.cc\/full\/.*(jpg|png|jpeg)\b")
+  wget -nc -P $walldir $page
+done
+rm tmp.txt
+
