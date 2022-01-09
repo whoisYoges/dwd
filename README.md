@@ -15,7 +15,7 @@ Dmenu Wallpaper Downloader (Automate wallpaper downloading using dmenu)
 ### Installation
 Get [dwd](dwd) in your \*nix machine, make it executable, place it in path and run `dwd` from anywhere.
 ```
-git clone https://github.com/whoisYoges/dwd.it
+git clone https://github.com/whoisYoges/dwd.git
 cd dwd/
 chmod +x dwd
 sudo mv dwd /usr/local/bin/
