@@ -1,20 +1,41 @@
-#!/bin/bash
+#!/bin/sh
 
-walldir="$HOME/Pictures/Wallpapers/"
+tmpwalldir="$HOME/Pictures/Wallpapers/Tmp/"
+finalwalldir="$HOME/Pictures/Wallpapers/Dwd/"
 maxpage=5
-query=$(echo -e | dmenu -p "Search Category: " -i)  
+
+if [ ! -d "$tmpwalldir" ]; then
+  mkdir "$tmpwalldir"
+fi
+
+if [ ! -d "$finalwalldir" ]; then
+  mkdir "$finalwalldir"
+fi
+tagoptions="#fantasy girl\n#anime\n#minimalism\n#Cyberpunk 2077\n#digital art\n#4K\n#nature"
+if [ -z $1 ]; then
+  query=$(echo -e $tagoptions | dmenu -p "Search Wallpaper Category: " -i)  
+else
+  query=$1
+fi
+
 sortoptions="date_added\nrelevance\nrandom\nviews\nfavorites\ntoplist"
 sorting=$(echo -e $sortoptions | dmenu -p "Sort Order: " -i)
 
 query="$(sed 's/#//g' <<<$query)"
-query="$(sed 's/ /+/g' <<<$query)" 
-echo $query
+query="$(sed 's/ /+/g' <<<"$query")" 
+echo "$query"
 
+notify-send "⬇️ Downloading wallpapers 🖼️"
 for i in $(seq 1 5);
 do
   curl -s https://wallhaven.cc/api/v1/search\?atleast\=1920x1080\&sorting\=$sorting\&q\=$query\&page\=$i > tmp.txt
-  page=$(cat tmp.txt | jq '.' | grep -Eoh "https:\/\/w\.wallhaven.cc\/full\/.*(jpg|png|jpeg)\b")
-  wget -nc -P $walldir $page
+  page=$(cat tmp.txt | jq '.' | grep -Eoh "https:\/\/w\.wallhaven.cc\/full\/.*(jpg|png)\b")
+  wget -nc -P $tmpwalldir $page
 done
 rm tmp.txt
-
+cd $tmpwalldir
+selectimage=$(ls *.{jpg,png} "$tmpwalldir" -1 | head -n1)
+xdg-open $selectimage
+mv *.{jpg,png} $finalwalldir 
+rm -rf $tmpwalldir
+notify-send "😊 Download finished ✅"

@@ -1,26 +1,29 @@
 # dwd
 Dmenu Wallpaper Downloader (Automate wallpaper downloading using dmenu)
 
-- dwd is a bash script to download random wallpapers according to the user input and order
+- dwd is a bash script to download wallpapers (in bulk) according to the user input and order.
 - downloads high quality wallpaper from [wallhaven](https://wallhaven.cc).
-- saves all the pictures in $HOME/Pictures/Wallpapers/ directory.
+- opens your default image viewer after downloading the wallpapers to modify (edit/delete unwanted) the pictures.
+- saves final wallpapers in `$HOME/Pictures/Wallpapers/Dwd/` directory.
 
 ### Dependencies
 1. dmenu
 
-## Installation and Usage
-*note: dmenu should have been installed OR ELSE you can modify the script accordingly to use with rofi/fzf or  just in a terminal emulator*
+### Optional Dependencies
+1. libnotify (Only to get notification)
 
-1. Get dwd script in your linux machine and execute it.
+### Installation
+Get [dwd](dwd) in your \*nix machine, make it executable, place it in path and run `dwd` from anywhere.
+```
+git clone https://github.com/whoisYoges/dwd.it
+cd dwd/
+chmod +x dwd
+sudo mv dwd /usr/local/bin/
+cd ..
+rm -rf dwd/
+```
 
-2. search your desired genere/category of wallpaper.
-
-3. select sorting option such as: date_added, relevance, random, views, favorites, toplist
-
-4. get some random wallpapers related to the category in $HOME/Pictures/Wallpapers/
-
-5. Check the wallpapers and delete those you don't like.
-
-**My practice of usage**
-
-get <a href = "dwd"><code>dwd</code></a> in your machine and put it in `/usr/local/bin/` and run it anywhere from dmenu.
+### Uninstallation
+```
+sudo rm /usr/local/bin/dwd
+```
