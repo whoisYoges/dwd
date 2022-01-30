@@ -8,6 +8,7 @@ Dmenu Wallpaper Downloader (Automate wallpaper downloading using dmenu)
 
 ### Dependencies
 1. dmenu
+2. wget
 
 ### Optional Dependencies
 1. libnotify (Only to get notification)
